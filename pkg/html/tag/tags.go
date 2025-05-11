@@ -1010,7 +1010,7 @@ type html_ struct {
 	*Tag
 }
 
-func (children ...html.Node) *html_ {
+func Html(children ...html.Node) *html_ {
 	return &html_{New("html", false, children)}
 }
 
@@ -1790,7 +1790,7 @@ type svg struct {
 	*Tag
 }
 
-func (children ...html.Node) *svg {
+func Svg(children ...html.Node) *svg {
 	return &svg{New("svg", false, children)}
 }
 

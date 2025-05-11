@@ -36,15 +36,6 @@ GLOBAL_ATTRIBUTES=(
 capitalize_first() {
   local input="$1"
   
-  special_cases=(svg html)
-
-  for special in "${special_cases[@]}"; do
-    if [[ "$input" == "$special" ]]; then
-      return
-    fi
-  done
-
-  
   first=$(echo "${input:0:1}" | tr '[:lower:]' '[:upper:]')
   rest="${input:1}"
   echo "$first$rest"
