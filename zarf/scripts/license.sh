@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 LICENSE_HEADER='/*
 Copyright 2025 Alexis Bouchez <alexbcz@proton.me>
 
@@ -41,23 +40,25 @@ add_license() {
     fi
 }
 
+if [[ "$#" -lt 1 ]]; then
     echo "Usage: $0 [file1.go file2.go ...] OR $0 --dir directory"
     echo "Adds the AGPL license header to Go files if not already present"
     exit 1
 fi
 
 if [[ "$1" == "--dir" ]]; then
+    if [[ -z "$2" ]]; then
         echo "Error: Directory path not provided with --dir option"
         exit 1
     fi
-    
+
     directory="$2"
-    
+
     if [[ ! -d "$directory" ]]; then
         echo "Error: Directory $directory not found"
         exit 1
     fi
-    
+
     find "$directory" -type f -name "*.go" | while read -r file; do
         if ! has_license "$file"; then
             add_license "$file"

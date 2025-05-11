@@ -1,7 +1,5 @@
-#!/bin/bash
-
-
-OUTPUT_FILE="generated_html_elements.go"
+#!/opt/homebrew/bin/bash
+OUTPUT_FILE="tags.go"
 
 cat > "$OUTPUT_FILE" << 'EOL'
 // Code generated - DO NOT EDIT.
@@ -118,10 +116,18 @@ EOL
 
   for attr in "${attributes[@]}"; do
     local method_name=$(attr_to_method "$attr")
+    local method_name_if="${method_name}If"
     cat >> "$OUTPUT_FILE" << EOL
 
 func (e *$struct_name) $method_name(value string) *$struct_name {
 	e.Attribute("$attr", value)
+	return e
+}
+
+func (e *$struct_name) $method_name_if(condition bool, value string) *$struct_name {
+	if condition {
+		e.Attribute("$attr", value)
+	}
 	return e
 }
 EOL

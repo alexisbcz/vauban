@@ -1,8 +1,10 @@
+// Code generated - DO NOT EDIT.
 package tag
 
 import (
 	"github.com/alexisbcz/vauban/pkg/html"
 )
+
 
 type a struct {
 	*Tag
@@ -17,8 +19,22 @@ func (e *a) Style(value string) *a {
 	return e
 }
 
+func (e *a) StyleIf(condition bool, value string) *a {
+	if condition {
+		e.Attribute("style", value)
+	}
+	return e
+}
+
 func (e *a) ID(value string) *a {
 	e.Attribute("id", value)
+	return e
+}
+
+func (e *a) IDIf(condition bool, value string) *a {
+	if condition {
+		e.Attribute("id", value)
+	}
 	return e
 }
 
@@ -27,8 +43,22 @@ func (e *a) Class(value string) *a {
 	return e
 }
 
+func (e *a) ClassIf(condition bool, value string) *a {
+	if condition {
+		e.Attribute("class", value)
+	}
+	return e
+}
+
 func (e *a) Href(value string) *a {
 	e.Attribute("href", value)
+	return e
+}
+
+func (e *a) HrefIf(condition bool, value string) *a {
+	if condition {
+		e.Attribute("href", value)
+	}
 	return e
 }
 
@@ -37,8 +67,22 @@ func (e *a) Target(value string) *a {
 	return e
 }
 
+func (e *a) TargetIf(condition bool, value string) *a {
+	if condition {
+		e.Attribute("target", value)
+	}
+	return e
+}
+
 func (e *a) Download(value string) *a {
 	e.Attribute("download", value)
+	return e
+}
+
+func (e *a) DownloadIf(condition bool, value string) *a {
+	if condition {
+		e.Attribute("download", value)
+	}
 	return e
 }
 
@@ -47,8 +91,22 @@ func (e *a) Rel(value string) *a {
 	return e
 }
 
+func (e *a) RelIf(condition bool, value string) *a {
+	if condition {
+		e.Attribute("rel", value)
+	}
+	return e
+}
+
 func (e *a) Type(value string) *a {
 	e.Attribute("type", value)
+	return e
+}
+
+func (e *a) TypeIf(condition bool, value string) *a {
+	if condition {
+		e.Attribute("type", value)
+	}
 	return e
 }
 
@@ -57,8 +115,22 @@ func (e *a) Hreflang(value string) *a {
 	return e
 }
 
+func (e *a) HreflangIf(condition bool, value string) *a {
+	if condition {
+		e.Attribute("hreflang", value)
+	}
+	return e
+}
+
 func (e *a) Media(value string) *a {
 	e.Attribute("media", value)
+	return e
+}
+
+func (e *a) MediaIf(condition bool, value string) *a {
+	if condition {
+		e.Attribute("media", value)
+	}
 	return e
 }
 
@@ -67,8 +139,22 @@ func (e *a) Ping(value string) *a {
 	return e
 }
 
+func (e *a) PingIf(condition bool, value string) *a {
+	if condition {
+		e.Attribute("ping", value)
+	}
+	return e
+}
+
 func (e *a) Referrerpolicy(value string) *a {
 	e.Attribute("referrerpolicy", value)
+	return e
+}
+
+func (e *a) ReferrerpolicyIf(condition bool, value string) *a {
+	if condition {
+		e.Attribute("referrerpolicy", value)
+	}
 	return e
 }
 
@@ -77,8 +163,22 @@ func (e *a) Accesskey(value string) *a {
 	return e
 }
 
+func (e *a) AccesskeyIf(condition bool, value string) *a {
+	if condition {
+		e.Attribute("accesskey", value)
+	}
+	return e
+}
+
 func (e *a) Contenteditable(value string) *a {
 	e.Attribute("contenteditable", value)
+	return e
+}
+
+func (e *a) ContenteditableIf(condition bool, value string) *a {
+	if condition {
+		e.Attribute("contenteditable", value)
+	}
 	return e
 }
 
@@ -87,8 +187,22 @@ func (e *a) Dir(value string) *a {
 	return e
 }
 
+func (e *a) DirIf(condition bool, value string) *a {
+	if condition {
+		e.Attribute("dir", value)
+	}
+	return e
+}
+
 func (e *a) Draggable(value string) *a {
 	e.Attribute("draggable", value)
+	return e
+}
+
+func (e *a) DraggableIf(condition bool, value string) *a {
+	if condition {
+		e.Attribute("draggable", value)
+	}
 	return e
 }
 
@@ -97,8 +211,22 @@ func (e *a) Hidden(value string) *a {
 	return e
 }
 
+func (e *a) HiddenIf(condition bool, value string) *a {
+	if condition {
+		e.Attribute("hidden", value)
+	}
+	return e
+}
+
 func (e *a) Lang(value string) *a {
 	e.Attribute("lang", value)
+	return e
+}
+
+func (e *a) LangIf(condition bool, value string) *a {
+	if condition {
+		e.Attribute("lang", value)
+	}
 	return e
 }
 
@@ -107,8 +235,22 @@ func (e *a) Spellcheck(value string) *a {
 	return e
 }
 
+func (e *a) SpellcheckIf(condition bool, value string) *a {
+	if condition {
+		e.Attribute("spellcheck", value)
+	}
+	return e
+}
+
 func (e *a) Tabindex(value string) *a {
 	e.Attribute("tabindex", value)
+	return e
+}
+
+func (e *a) TabindexIf(condition bool, value string) *a {
+	if condition {
+		e.Attribute("tabindex", value)
+	}
 	return e
 }
 
@@ -117,13 +259,34 @@ func (e *a) Title(value string) *a {
 	return e
 }
 
+func (e *a) TitleIf(condition bool, value string) *a {
+	if condition {
+		e.Attribute("title", value)
+	}
+	return e
+}
+
 func (e *a) Translate(value string) *a {
 	e.Attribute("translate", value)
 	return e
 }
 
+func (e *a) TranslateIf(condition bool, value string) *a {
+	if condition {
+		e.Attribute("translate", value)
+	}
+	return e
+}
+
 func (e *a) Role(value string) *a {
 	e.Attribute("role", value)
+	return e
+}
+
+func (e *a) RoleIf(condition bool, value string) *a {
+	if condition {
+		e.Attribute("role", value)
+	}
 	return e
 }
 
@@ -156,13 +319,34 @@ func (e *area) Alt(value string) *area {
 	return e
 }
 
+func (e *area) AltIf(condition bool, value string) *area {
+	if condition {
+		e.Attribute("alt", value)
+	}
+	return e
+}
+
 func (e *area) Coords(value string) *area {
 	e.Attribute("coords", value)
 	return e
 }
 
+func (e *area) CoordsIf(condition bool, value string) *area {
+	if condition {
+		e.Attribute("coords", value)
+	}
+	return e
+}
+
 func (e *area) Shape(value string) *area {
 	e.Attribute("shape", value)
+	return e
+}
+
+func (e *area) ShapeIf(condition bool, value string) *area {
+	if condition {
+		e.Attribute("shape", value)
+	}
 	return e
 }
 
@@ -195,8 +379,22 @@ func (e *audio) Src(value string) *audio {
 	return e
 }
 
+func (e *audio) SrcIf(condition bool, value string) *audio {
+	if condition {
+		e.Attribute("src", value)
+	}
+	return e
+}
+
 func (e *audio) Controls(value string) *audio {
 	e.Attribute("controls", value)
+	return e
+}
+
+func (e *audio) ControlsIf(condition bool, value string) *audio {
+	if condition {
+		e.Attribute("controls", value)
+	}
 	return e
 }
 
@@ -205,8 +403,22 @@ func (e *audio) Autoplay(value string) *audio {
 	return e
 }
 
+func (e *audio) AutoplayIf(condition bool, value string) *audio {
+	if condition {
+		e.Attribute("autoplay", value)
+	}
+	return e
+}
+
 func (e *audio) Loop(value string) *audio {
 	e.Attribute("loop", value)
+	return e
+}
+
+func (e *audio) LoopIf(condition bool, value string) *audio {
+	if condition {
+		e.Attribute("loop", value)
+	}
 	return e
 }
 
@@ -215,8 +427,22 @@ func (e *audio) Muted(value string) *audio {
 	return e
 }
 
+func (e *audio) MutedIf(condition bool, value string) *audio {
+	if condition {
+		e.Attribute("muted", value)
+	}
+	return e
+}
+
 func (e *audio) Preload(value string) *audio {
 	e.Attribute("preload", value)
+	return e
+}
+
+func (e *audio) PreloadIf(condition bool, value string) *audio {
+	if condition {
+		e.Attribute("preload", value)
+	}
 	return e
 }
 
@@ -265,6 +491,13 @@ func (e *blockquote) Cite(value string) *blockquote {
 	return e
 }
 
+func (e *blockquote) CiteIf(condition bool, value string) *blockquote {
+	if condition {
+		e.Attribute("cite", value)
+	}
+	return e
+}
+
 type body struct {
 	*Tag
 }
@@ -294,8 +527,22 @@ func (e *button) Value(value string) *button {
 	return e
 }
 
+func (e *button) ValueIf(condition bool, value string) *button {
+	if condition {
+		e.Attribute("value", value)
+	}
+	return e
+}
+
 func (e *button) Name(value string) *button {
 	e.Attribute("name", value)
+	return e
+}
+
+func (e *button) NameIf(condition bool, value string) *button {
+	if condition {
+		e.Attribute("name", value)
+	}
 	return e
 }
 
@@ -304,8 +551,22 @@ func (e *button) Disabled(value string) *button {
 	return e
 }
 
+func (e *button) DisabledIf(condition bool, value string) *button {
+	if condition {
+		e.Attribute("disabled", value)
+	}
+	return e
+}
+
 func (e *button) Form(value string) *button {
 	e.Attribute("form", value)
+	return e
+}
+
+func (e *button) FormIf(condition bool, value string) *button {
+	if condition {
+		e.Attribute("form", value)
+	}
 	return e
 }
 
@@ -314,8 +575,22 @@ func (e *button) Formaction(value string) *button {
 	return e
 }
 
+func (e *button) FormactionIf(condition bool, value string) *button {
+	if condition {
+		e.Attribute("formaction", value)
+	}
+	return e
+}
+
 func (e *button) Formmethod(value string) *button {
 	e.Attribute("formmethod", value)
+	return e
+}
+
+func (e *button) FormmethodIf(condition bool, value string) *button {
+	if condition {
+		e.Attribute("formmethod", value)
+	}
 	return e
 }
 
@@ -324,8 +599,22 @@ func (e *button) Formenctype(value string) *button {
 	return e
 }
 
+func (e *button) FormenctypeIf(condition bool, value string) *button {
+	if condition {
+		e.Attribute("formenctype", value)
+	}
+	return e
+}
+
 func (e *button) Formtarget(value string) *button {
 	e.Attribute("formtarget", value)
+	return e
+}
+
+func (e *button) FormtargetIf(condition bool, value string) *button {
+	if condition {
+		e.Attribute("formtarget", value)
+	}
 	return e
 }
 
@@ -334,8 +623,22 @@ func (e *button) Formnovalidate(value string) *button {
 	return e
 }
 
+func (e *button) FormnovalidateIf(condition bool, value string) *button {
+	if condition {
+		e.Attribute("formnovalidate", value)
+	}
+	return e
+}
+
 func (e *button) Autofocus(value string) *button {
 	e.Attribute("autofocus", value)
+	return e
+}
+
+func (e *button) AutofocusIf(condition bool, value string) *button {
+	if condition {
+		e.Attribute("autofocus", value)
+	}
 	return e
 }
 
@@ -352,8 +655,22 @@ func (e *canvas) Width(value string) *canvas {
 	return e
 }
 
+func (e *canvas) WidthIf(condition bool, value string) *canvas {
+	if condition {
+		e.Attribute("width", value)
+	}
+	return e
+}
+
 func (e *canvas) Height(value string) *canvas {
 	e.Attribute("height", value)
+	return e
+}
+
+func (e *canvas) HeightIf(condition bool, value string) *canvas {
+	if condition {
+		e.Attribute("height", value)
+	}
 	return e
 }
 
@@ -391,6 +708,13 @@ func Col(children ...html.Node) *col {
 
 func (e *col) Span(value string) *col {
 	e.Attribute("span", value)
+	return e
+}
+
+func (e *col) SpanIf(condition bool, value string) *col {
+	if condition {
+		e.Attribute("span", value)
+	}
 	return e
 }
 
@@ -444,6 +768,13 @@ func Details(children ...html.Node) *details {
 
 func (e *details) Open(value string) *details {
 	e.Attribute("open", value)
+	return e
+}
+
+func (e *details) OpenIf(condition bool, value string) *details {
+	if condition {
+		e.Attribute("open", value)
+	}
 	return e
 }
 
@@ -548,8 +879,22 @@ func (e *form) Action(value string) *form {
 	return e
 }
 
+func (e *form) ActionIf(condition bool, value string) *form {
+	if condition {
+		e.Attribute("action", value)
+	}
+	return e
+}
+
 func (e *form) Method(value string) *form {
 	e.Attribute("method", value)
+	return e
+}
+
+func (e *form) MethodIf(condition bool, value string) *form {
+	if condition {
+		e.Attribute("method", value)
+	}
 	return e
 }
 
@@ -558,13 +903,34 @@ func (e *form) Enctype(value string) *form {
 	return e
 }
 
+func (e *form) EnctypeIf(condition bool, value string) *form {
+	if condition {
+		e.Attribute("enctype", value)
+	}
+	return e
+}
+
 func (e *form) Novalidate(value string) *form {
 	e.Attribute("novalidate", value)
 	return e
 }
 
+func (e *form) NovalidateIf(condition bool, value string) *form {
+	if condition {
+		e.Attribute("novalidate", value)
+	}
+	return e
+}
+
 func (e *form) Autocomplete(value string) *form {
 	e.Attribute("autocomplete", value)
+	return e
+}
+
+func (e *form) AutocompleteIf(condition bool, value string) *form {
+	if condition {
+		e.Attribute("autocomplete", value)
+	}
 	return e
 }
 
@@ -644,7 +1010,7 @@ type html_ struct {
 	*Tag
 }
 
-func HTML(children ...html.Node) *html_ {
+func (children ...html.Node) *html_ {
 	return &html_{New("html", false, children)}
 }
 
@@ -669,8 +1035,22 @@ func (e *iframe) Allow(value string) *iframe {
 	return e
 }
 
+func (e *iframe) AllowIf(condition bool, value string) *iframe {
+	if condition {
+		e.Attribute("allow", value)
+	}
+	return e
+}
+
 func (e *iframe) Allowfullscreen(value string) *iframe {
 	e.Attribute("allowfullscreen", value)
+	return e
+}
+
+func (e *iframe) AllowfullscreenIf(condition bool, value string) *iframe {
+	if condition {
+		e.Attribute("allowfullscreen", value)
+	}
 	return e
 }
 
@@ -679,13 +1059,34 @@ func (e *iframe) Sandbox(value string) *iframe {
 	return e
 }
 
+func (e *iframe) SandboxIf(condition bool, value string) *iframe {
+	if condition {
+		e.Attribute("sandbox", value)
+	}
+	return e
+}
+
 func (e *iframe) Srcdoc(value string) *iframe {
 	e.Attribute("srcdoc", value)
 	return e
 }
 
+func (e *iframe) SrcdocIf(condition bool, value string) *iframe {
+	if condition {
+		e.Attribute("srcdoc", value)
+	}
+	return e
+}
+
 func (e *iframe) Loading(value string) *iframe {
 	e.Attribute("loading", value)
+	return e
+}
+
+func (e *iframe) LoadingIf(condition bool, value string) *iframe {
+	if condition {
+		e.Attribute("loading", value)
+	}
 	return e
 }
 
@@ -702,8 +1103,22 @@ func (e *img) Srcset(value string) *img {
 	return e
 }
 
+func (e *img) SrcsetIf(condition bool, value string) *img {
+	if condition {
+		e.Attribute("srcset", value)
+	}
+	return e
+}
+
 func (e *img) Sizes(value string) *img {
 	e.Attribute("sizes", value)
+	return e
+}
+
+func (e *img) SizesIf(condition bool, value string) *img {
+	if condition {
+		e.Attribute("sizes", value)
+	}
 	return e
 }
 
@@ -712,8 +1127,22 @@ func (e *img) Crossorigin(value string) *img {
 	return e
 }
 
+func (e *img) CrossoriginIf(condition bool, value string) *img {
+	if condition {
+		e.Attribute("crossorigin", value)
+	}
+	return e
+}
+
 func (e *img) Decoding(value string) *img {
 	e.Attribute("decoding", value)
+	return e
+}
+
+func (e *img) DecodingIf(condition bool, value string) *img {
+	if condition {
+		e.Attribute("decoding", value)
+	}
 	return e
 }
 
@@ -722,8 +1151,22 @@ func (e *img) Ismap(value string) *img {
 	return e
 }
 
+func (e *img) IsmapIf(condition bool, value string) *img {
+	if condition {
+		e.Attribute("ismap", value)
+	}
+	return e
+}
+
 func (e *img) Usemap(value string) *img {
 	e.Attribute("usemap", value)
+	return e
+}
+
+func (e *img) UsemapIf(condition bool, value string) *img {
+	if condition {
+		e.Attribute("usemap", value)
+	}
 	return e
 }
 
@@ -740,8 +1183,22 @@ func (e *input) Placeholder(value string) *input {
 	return e
 }
 
+func (e *input) PlaceholderIf(condition bool, value string) *input {
+	if condition {
+		e.Attribute("placeholder", value)
+	}
+	return e
+}
+
 func (e *input) Required(value string) *input {
 	e.Attribute("required", value)
+	return e
+}
+
+func (e *input) RequiredIf(condition bool, value string) *input {
+	if condition {
+		e.Attribute("required", value)
+	}
 	return e
 }
 
@@ -750,8 +1207,22 @@ func (e *input) Readonly(value string) *input {
 	return e
 }
 
+func (e *input) ReadonlyIf(condition bool, value string) *input {
+	if condition {
+		e.Attribute("readonly", value)
+	}
+	return e
+}
+
 func (e *input) Checked(value string) *input {
 	e.Attribute("checked", value)
+	return e
+}
+
+func (e *input) CheckedIf(condition bool, value string) *input {
+	if condition {
+		e.Attribute("checked", value)
+	}
 	return e
 }
 
@@ -760,13 +1231,34 @@ func (e *input) Min(value string) *input {
 	return e
 }
 
+func (e *input) MinIf(condition bool, value string) *input {
+	if condition {
+		e.Attribute("min", value)
+	}
+	return e
+}
+
 func (e *input) Max(value string) *input {
 	e.Attribute("max", value)
 	return e
 }
 
+func (e *input) MaxIf(condition bool, value string) *input {
+	if condition {
+		e.Attribute("max", value)
+	}
+	return e
+}
+
 func (e *input) Pattern(value string) *input {
 	e.Attribute("pattern", value)
+	return e
+}
+
+func (e *input) PatternIf(condition bool, value string) *input {
+	if condition {
+		e.Attribute("pattern", value)
+	}
 	return e
 }
 
@@ -799,6 +1291,13 @@ func (e *label) For(value string) *label {
 	return e
 }
 
+func (e *label) ForIf(condition bool, value string) *label {
+	if condition {
+		e.Attribute("for", value)
+	}
+	return e
+}
+
 type legend struct {
 	*Tag
 }
@@ -825,6 +1324,13 @@ func Link(children ...html.Node) *link {
 
 func (e *link) Integrity(value string) *link {
 	e.Attribute("integrity", value)
+	return e
+}
+
+func (e *link) IntegrityIf(condition bool, value string) *link {
+	if condition {
+		e.Attribute("integrity", value)
+	}
 	return e
 }
 
@@ -865,13 +1371,34 @@ func (e *meta) Content(value string) *meta {
 	return e
 }
 
+func (e *meta) ContentIf(condition bool, value string) *meta {
+	if condition {
+		e.Attribute("content", value)
+	}
+	return e
+}
+
 func (e *meta) Charset(value string) *meta {
 	e.Attribute("charset", value)
 	return e
 }
 
+func (e *meta) CharsetIf(condition bool, value string) *meta {
+	if condition {
+		e.Attribute("charset", value)
+	}
+	return e
+}
+
 func (e *meta) HttpEquiv(value string) *meta {
 	e.Attribute("http-equiv", value)
+	return e
+}
+
+func (e *meta) HttpEquivIf(condition bool, value string) *meta {
+	if condition {
+		e.Attribute("http-equiv", value)
+	}
 	return e
 }
 
@@ -888,13 +1415,34 @@ func (e *meter) Low(value string) *meter {
 	return e
 }
 
+func (e *meter) LowIf(condition bool, value string) *meter {
+	if condition {
+		e.Attribute("low", value)
+	}
+	return e
+}
+
 func (e *meter) High(value string) *meter {
 	e.Attribute("high", value)
 	return e
 }
 
+func (e *meter) HighIf(condition bool, value string) *meter {
+	if condition {
+		e.Attribute("high", value)
+	}
+	return e
+}
+
 func (e *meter) Optimum(value string) *meter {
 	e.Attribute("optimum", value)
+	return e
+}
+
+func (e *meter) OptimumIf(condition bool, value string) *meter {
+	if condition {
+		e.Attribute("optimum", value)
+	}
 	return e
 }
 
@@ -935,8 +1483,22 @@ func (e *ol) Start(value string) *ol {
 	return e
 }
 
+func (e *ol) StartIf(condition bool, value string) *ol {
+	if condition {
+		e.Attribute("start", value)
+	}
+	return e
+}
+
 func (e *ol) Reversed(value string) *ol {
 	e.Attribute("reversed", value)
+	return e
+}
+
+func (e *ol) ReversedIf(condition bool, value string) *ol {
+	if condition {
+		e.Attribute("reversed", value)
+	}
 	return e
 }
 
@@ -953,6 +1515,13 @@ func (e *optgroup) Label(value string) *optgroup {
 	return e
 }
 
+func (e *optgroup) LabelIf(condition bool, value string) *optgroup {
+	if condition {
+		e.Attribute("label", value)
+	}
+	return e
+}
+
 type option struct {
 	*Tag
 }
@@ -963,6 +1532,13 @@ func Option(children ...html.Node) *option {
 
 func (e *option) Selected(value string) *option {
 	e.Attribute("selected", value)
+	return e
+}
+
+func (e *option) SelectedIf(condition bool, value string) *option {
+	if condition {
+		e.Attribute("selected", value)
+	}
 	return e
 }
 
@@ -1075,13 +1651,34 @@ func (e *script) Async(value string) *script {
 	return e
 }
 
+func (e *script) AsyncIf(condition bool, value string) *script {
+	if condition {
+		e.Attribute("async", value)
+	}
+	return e
+}
+
 func (e *script) Defer(value string) *script {
 	e.Attribute("defer", value)
 	return e
 }
 
+func (e *script) DeferIf(condition bool, value string) *script {
+	if condition {
+		e.Attribute("defer", value)
+	}
+	return e
+}
+
 func (e *script) Nomodule(value string) *script {
 	e.Attribute("nomodule", value)
+	return e
+}
+
+func (e *script) NomoduleIf(condition bool, value string) *script {
+	if condition {
+		e.Attribute("nomodule", value)
+	}
 	return e
 }
 
@@ -1106,8 +1703,22 @@ func (e *select_) Multiple(value string) *select_ {
 	return e
 }
 
+func (e *select_) MultipleIf(condition bool, value string) *select_ {
+	if condition {
+		e.Attribute("multiple", value)
+	}
+	return e
+}
+
 func (e *select_) Size(value string) *select_ {
 	e.Attribute("size", value)
+	return e
+}
+
+func (e *select_) SizeIf(condition bool, value string) *select_ {
+	if condition {
+		e.Attribute("size", value)
+	}
 	return e
 }
 
@@ -1179,7 +1790,7 @@ type svg struct {
 	*Tag
 }
 
-func SVG(children ...html.Node) *svg {
+func (children ...html.Node) *svg {
 	return &svg{New("svg", false, children)}
 }
 
@@ -1188,8 +1799,22 @@ func (e *svg) ViewBox(value string) *svg {
 	return e
 }
 
+func (e *svg) ViewBoxIf(condition bool, value string) *svg {
+	if condition {
+		e.Attribute("viewBox", value)
+	}
+	return e
+}
+
 func (e *svg) PreserveAspectRatio(value string) *svg {
 	e.Attribute("preserveAspectRatio", value)
+	return e
+}
+
+func (e *svg) PreserveAspectRatioIf(condition bool, value string) *svg {
+	if condition {
+		e.Attribute("preserveAspectRatio", value)
+	}
 	return e
 }
 
@@ -1198,8 +1823,22 @@ func (e *svg) Xmlns(value string) *svg {
 	return e
 }
 
+func (e *svg) XmlnsIf(condition bool, value string) *svg {
+	if condition {
+		e.Attribute("xmlns", value)
+	}
+	return e
+}
+
 func (e *svg) Version(value string) *svg {
 	e.Attribute("version", value)
+	return e
+}
+
+func (e *svg) VersionIf(condition bool, value string) *svg {
+	if condition {
+		e.Attribute("version", value)
+	}
 	return e
 }
 
@@ -1216,13 +1855,34 @@ func (e *table) Border(value string) *table {
 	return e
 }
 
+func (e *table) BorderIf(condition bool, value string) *table {
+	if condition {
+		e.Attribute("border", value)
+	}
+	return e
+}
+
 func (e *table) Cellpadding(value string) *table {
 	e.Attribute("cellpadding", value)
 	return e
 }
 
+func (e *table) CellpaddingIf(condition bool, value string) *table {
+	if condition {
+		e.Attribute("cellpadding", value)
+	}
+	return e
+}
+
 func (e *table) Cellspacing(value string) *table {
 	e.Attribute("cellspacing", value)
+	return e
+}
+
+func (e *table) CellspacingIf(condition bool, value string) *table {
+	if condition {
+		e.Attribute("cellspacing", value)
+	}
 	return e
 }
 
@@ -1247,13 +1907,34 @@ func (e *td) Colspan(value string) *td {
 	return e
 }
 
+func (e *td) ColspanIf(condition bool, value string) *td {
+	if condition {
+		e.Attribute("colspan", value)
+	}
+	return e
+}
+
 func (e *td) Rowspan(value string) *td {
 	e.Attribute("rowspan", value)
 	return e
 }
 
+func (e *td) RowspanIf(condition bool, value string) *td {
+	if condition {
+		e.Attribute("rowspan", value)
+	}
+	return e
+}
+
 func (e *td) Headers(value string) *td {
 	e.Attribute("headers", value)
+	return e
+}
+
+func (e *td) HeadersIf(condition bool, value string) *td {
+	if condition {
+		e.Attribute("headers", value)
+	}
 	return e
 }
 
@@ -1278,8 +1959,22 @@ func (e *textarea) Rows(value string) *textarea {
 	return e
 }
 
+func (e *textarea) RowsIf(condition bool, value string) *textarea {
+	if condition {
+		e.Attribute("rows", value)
+	}
+	return e
+}
+
 func (e *textarea) Cols(value string) *textarea {
 	e.Attribute("cols", value)
+	return e
+}
+
+func (e *textarea) ColsIf(condition bool, value string) *textarea {
+	if condition {
+		e.Attribute("cols", value)
+	}
 	return e
 }
 
@@ -1288,13 +1983,34 @@ func (e *textarea) Maxlength(value string) *textarea {
 	return e
 }
 
+func (e *textarea) MaxlengthIf(condition bool, value string) *textarea {
+	if condition {
+		e.Attribute("maxlength", value)
+	}
+	return e
+}
+
 func (e *textarea) Minlength(value string) *textarea {
 	e.Attribute("minlength", value)
 	return e
 }
 
+func (e *textarea) MinlengthIf(condition bool, value string) *textarea {
+	if condition {
+		e.Attribute("minlength", value)
+	}
+	return e
+}
+
 func (e *textarea) Wrap(value string) *textarea {
 	e.Attribute("wrap", value)
+	return e
+}
+
+func (e *textarea) WrapIf(condition bool, value string) *textarea {
+	if condition {
+		e.Attribute("wrap", value)
+	}
 	return e
 }
 
@@ -1319,6 +2035,13 @@ func (e *th) Scope(value string) *th {
 	return e
 }
 
+func (e *th) ScopeIf(condition bool, value string) *th {
+	if condition {
+		e.Attribute("scope", value)
+	}
+	return e
+}
+
 type thead struct {
 	*Tag
 }
@@ -1337,6 +2060,13 @@ func Time(children ...html.Node) *time {
 
 func (e *time) Datetime(value string) *time {
 	e.Attribute("datetime", value)
+	return e
+}
+
+func (e *time) DatetimeIf(condition bool, value string) *time {
+	if condition {
+		e.Attribute("datetime", value)
+	}
 	return e
 }
 
@@ -1401,6 +2131,13 @@ func (e *video) Poster(value string) *video {
 	return e
 }
 
+func (e *video) PosterIf(condition bool, value string) *video {
+	if condition {
+		e.Attribute("poster", value)
+	}
+	return e
+}
+
 type wbr struct {
 	*Tag
 }
@@ -1422,8 +2159,22 @@ func (e *circle) Cx(value string) *circle {
 	return e
 }
 
+func (e *circle) CxIf(condition bool, value string) *circle {
+	if condition {
+		e.Attribute("cx", value)
+	}
+	return e
+}
+
 func (e *circle) Cy(value string) *circle {
 	e.Attribute("cy", value)
+	return e
+}
+
+func (e *circle) CyIf(condition bool, value string) *circle {
+	if condition {
+		e.Attribute("cy", value)
+	}
 	return e
 }
 
@@ -1432,13 +2183,34 @@ func (e *circle) R(value string) *circle {
 	return e
 }
 
+func (e *circle) RIf(condition bool, value string) *circle {
+	if condition {
+		e.Attribute("r", value)
+	}
+	return e
+}
+
 func (e *circle) Fill(value string) *circle {
 	e.Attribute("fill", value)
 	return e
 }
 
+func (e *circle) FillIf(condition bool, value string) *circle {
+	if condition {
+		e.Attribute("fill", value)
+	}
+	return e
+}
+
 func (e *circle) Stroke(value string) *circle {
 	e.Attribute("stroke", value)
+	return e
+}
+
+func (e *circle) StrokeIf(condition bool, value string) *circle {
+	if condition {
+		e.Attribute("stroke", value)
+	}
 	return e
 }
 
@@ -1463,6 +2235,13 @@ func (e *g) Transform(value string) *g {
 	return e
 }
 
+func (e *g) TransformIf(condition bool, value string) *g {
+	if condition {
+		e.Attribute("transform", value)
+	}
+	return e
+}
+
 type line struct {
 	*Tag
 }
@@ -1476,8 +2255,22 @@ func (e *line) X1(value string) *line {
 	return e
 }
 
+func (e *line) X1If(condition bool, value string) *line {
+	if condition {
+		e.Attribute("x1", value)
+	}
+	return e
+}
+
 func (e *line) Y1(value string) *line {
 	e.Attribute("y1", value)
+	return e
+}
+
+func (e *line) Y1If(condition bool, value string) *line {
+	if condition {
+		e.Attribute("y1", value)
+	}
 	return e
 }
 
@@ -1486,13 +2279,34 @@ func (e *line) X2(value string) *line {
 	return e
 }
 
+func (e *line) X2If(condition bool, value string) *line {
+	if condition {
+		e.Attribute("x2", value)
+	}
+	return e
+}
+
 func (e *line) Y2(value string) *line {
 	e.Attribute("y2", value)
 	return e
 }
 
+func (e *line) Y2If(condition bool, value string) *line {
+	if condition {
+		e.Attribute("y2", value)
+	}
+	return e
+}
+
 func (e *line) StrokeWidth(value string) *line {
 	e.Attribute("stroke-width", value)
+	return e
+}
+
+func (e *line) StrokeWidthIf(condition bool, value string) *line {
+	if condition {
+		e.Attribute("stroke-width", value)
+	}
 	return e
 }
 
@@ -1509,6 +2323,13 @@ func (e *path) D(value string) *path {
 	return e
 }
 
+func (e *path) DIf(condition bool, value string) *path {
+	if condition {
+		e.Attribute("d", value)
+	}
+	return e
+}
+
 type polygon struct {
 	*Tag
 }
@@ -1519,6 +2340,13 @@ func Polygon(children ...html.Node) *polygon {
 
 func (e *polygon) Points(value string) *polygon {
 	e.Attribute("points", value)
+	return e
+}
+
+func (e *polygon) PointsIf(condition bool, value string) *polygon {
+	if condition {
+		e.Attribute("points", value)
+	}
 	return e
 }
 
@@ -1543,8 +2371,22 @@ func (e *rect) X(value string) *rect {
 	return e
 }
 
+func (e *rect) XIf(condition bool, value string) *rect {
+	if condition {
+		e.Attribute("x", value)
+	}
+	return e
+}
+
 func (e *rect) Y(value string) *rect {
 	e.Attribute("y", value)
+	return e
+}
+
+func (e *rect) YIf(condition bool, value string) *rect {
+	if condition {
+		e.Attribute("y", value)
+	}
 	return e
 }
 
@@ -1553,8 +2395,22 @@ func (e *rect) Rx(value string) *rect {
 	return e
 }
 
+func (e *rect) RxIf(condition bool, value string) *rect {
+	if condition {
+		e.Attribute("rx", value)
+	}
+	return e
+}
+
 func (e *rect) Ry(value string) *rect {
 	e.Attribute("ry", value)
+	return e
+}
+
+func (e *rect) RyIf(condition bool, value string) *rect {
+	if condition {
+		e.Attribute("ry", value)
+	}
 	return e
 }
 
@@ -1571,8 +2427,22 @@ func (e *text) FontSize(value string) *text {
 	return e
 }
 
+func (e *text) FontSizeIf(condition bool, value string) *text {
+	if condition {
+		e.Attribute("font-size", value)
+	}
+	return e
+}
+
 func (e *text) TextAnchor(value string) *text {
 	e.Attribute("text-anchor", value)
+	return e
+}
+
+func (e *text) TextAnchorIf(condition bool, value string) *text {
+	if condition {
+		e.Attribute("text-anchor", value)
+	}
 	return e
 }
 
