@@ -23,6 +23,8 @@ package env
 
 import "os"
 
+// GetVar retrieves an environment variable by key,
+// returning a fallback value if not found.
 func GetVar(key, fallback string) string {
 	value, found := os.LookupEnv(key)
 	if found {

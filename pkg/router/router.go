@@ -22,11 +22,12 @@ For commercial licensing options, please contact Alexis Bouchez at alexbcz@proto
 package router
 
 import (
-	"fmt"
+	"errors"
 	"log/slog"
 	"net/http"
 
 	"github.com/alexisbcz/vauban/pkg/controllers"
+	"github.com/alexisbcz/vauban/pkg/httperror"
 )
 
 type Router struct {
@@ -35,10 +36,9 @@ type Router struct {
 
 func New() *Router {
 	router := &Router{http.NewServeMux()}
-
 	containersController := controllers.NewContainersController()
 	router.Get("/containers/{$}", containersController.Index)
-
+	router.Get("/containers/{id}/{$}", containersController.Show)
 	return router
 }
 
@@ -47,9 +47,18 @@ type HTTPHandlerWithErr func(http.ResponseWriter, *http.Request) error
 func (r *Router) Handle(pattern string, handler HTTPHandlerWithErr) {
 	slog.Info("registering http route", "pattern", pattern)
 	r.HandleFunc(pattern, func(w http.ResponseWriter, r *http.Request) {
-		fmt.Println("hello")
 		if err := handler(w, r); err != nil {
-			http.Error(w, err.Error(), http.StatusInternalServerError)
+			// Check if it's an HTTPError
+			var httpErr *httperror.HTTPError
+			if errors.As(err, &httpErr) {
+				// Use the status code from the HTTPError
+				http.Error(w, err.Error(), httpErr.Code)
+				slog.Debug("http error", "code", httpErr.Code, "err", err.Error())
+			} else {
+				// Default to 500 for non-HTTP errors
+				http.Error(w, err.Error(), http.StatusInternalServerError)
+				slog.Error("internal server error", "err", err.Error())
+			}
 		}
 	})
 }

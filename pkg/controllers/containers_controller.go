@@ -22,8 +22,9 @@ For commercial licensing options, please contact Alexis Bouchez at alexbcz@proto
 package controllers
 
 import (
-	"errors"
 	"net/http"
+
+	"github.com/alexisbcz/vauban/pkg/httperror"
 )
 
 type ContainersController struct{}
@@ -33,5 +34,9 @@ func NewContainersController() *ContainersController {
 }
 
 func (c *ContainersController) Index(w http.ResponseWriter, r *http.Request) error {
-	return errors.New("failed to retrieve the list of containers")
+	return httperror.NotImplemented("not implemented")
+}
+
+func (c *ContainersController) Show(w http.ResponseWriter, r *http.Request) error {
+	return httperror.NotFound("container not found")
 }
