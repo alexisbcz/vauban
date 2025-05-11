@@ -32,9 +32,6 @@ type HTTPError struct {
 	Code int
 }
 
-// Used to check HTTPError implements the Error interface correctly
-var _ error = HTTPError{}
-
 // New creates an instance of HTTPError
 func New(code int, message string) *HTTPError {
 	return &HTTPError{
