@@ -29,7 +29,7 @@ type CardProps struct {
 func Card(props CardProps) func(children ...html.Node) html.Node {
 	return func(children ...html.Node) html.Node {
 		return html.Div().
-			Class("border border-neutral-300 p-4", props.Class).
+			Class("bg-white border border-neutral-300 rounded-md p-6", props.Class).
 			Children(children...)
 	}
 }

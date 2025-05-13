@@ -18,18 +18,19 @@ along with Vauban. If not, see <https://www.gnu.org/licenses/>.
 
 For commercial licensing options, please contact Alexis Bouchez at alexbcz@proton.me
 */
-package layouts
+package ui
 
 import html "github.com/alexisbcz/libhtml"
 
-type DashboardLayoutProps struct {
-	Title string
+type ButtonProps struct {
+	Class string
+	Text  string
 }
 
-func DashboardLayout(props DashboardLayoutProps) func(children ...html.Node) html.Node {
+func Button(props ButtonProps) func(children ...html.Node) html.Node {
 	return func(children ...html.Node) html.Node {
-		return BaseLayout(BaseLayoutProps{
-			Title: props.Title,
-		})(children...)
+		return html.Button().
+			Class("h-9 px-4 py-2 bg-black text-white shadow hover:bg-black/90 inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0", props.Class).
+			Children(html.Text(props.Text), html.Group(children...))
 	}
 }

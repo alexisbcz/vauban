@@ -30,9 +30,11 @@ import (
 	"time"
 
 	"github.com/alexisbcz/vauban/controllers"
+	"github.com/alexisbcz/vauban/database/repositories"
 	"github.com/alexisbcz/vauban/exit"
 	"github.com/alexisbcz/vauban/httperror"
 	"github.com/alexisbcz/vauban/public"
+	"github.com/jackc/pgx/v5/pgxpool"
 	datastar "github.com/starfederation/datastar/sdk/go"
 )
 
@@ -40,10 +42,29 @@ type Router struct {
 	*http.ServeMux
 }
 
-func New() *Router {
+func New(dbpool *pgxpool.Pool) *Router {
 	router := &Router{http.NewServeMux()}
 
 	router.handlePublicAssets()
+	router.handleHotReload()
+
+	usersRepository := repositories.NewUsersRepository(dbpool)
+
+	signUpController := controllers.NewSignUpController(usersRepository)
+	router.Get("/sign-up/{$}", signUpController.Show)
+	router.Post("/sign-up/{$}", signUpController.Handle)
+
+	signInController := controllers.NewSignInController(usersRepository)
+	router.Get("/sign-in/{$}", signInController.Show)
+	router.Post("/sign-in/{$}", signInController.Handle)
+
+	forgotPasswordController := controllers.NewForgotPasswordController(usersRepository)
+	router.Get("/forgot-password/{$}", forgotPasswordController.Show)
+	router.Post("/forgot-password/{$}", forgotPasswordController.Handle)
+
+	resetPasswordController := controllers.NewResetPasswordController(usersRepository)
+	router.Get("/reset-password/{$}", resetPasswordController.Show)
+	router.Post("/reset-password/{$}", resetPasswordController.Handle)
 
 	containersController := controllers.NewContainersController()
 	router.Get("/containers/{$}", containersController.Index)
@@ -62,22 +83,24 @@ func (r *Router) handlePublicAssets() {
 
 var hotReloadOnlyOnce sync.Once
 
-func (router *Router) handleHotReload(w http.ResponseWriter, r *http.Request) {
-	sse := datastar.NewSSE(w, r)
-	hotReloadOnlyOnce.Do(func() {
-		// Refresh the client page as soon as connection
-		// is established. This will occur only once
-		// after the server starts.
-		sse.ExecuteScript(
-			"window.location.reload()",
-			datastar.WithExecuteScriptRetryDuration(time.Second),
-		)
-	})
+func (r *Router) handleHotReload() {
+	r.HandleFunc("/hotreload", func(w http.ResponseWriter, req *http.Request) {
+		sse := datastar.NewSSE(w, req)
+		hotReloadOnlyOnce.Do(func() {
+			// Refresh the client page as soon as connection
+			// is established. This will occur only once
+			// after the server starts.
+			sse.ExecuteScript(
+				"window.location.reload()",
+				datastar.WithExecuteScriptRetryDuration(time.Second),
+			)
+		})
 
-	// Freeze the event stream until the connection
-	// is lost for any reason. This will force the client
-	// to attempt to reconnect after the server reboots.
-	<-r.Context().Done()
+		// Freeze the event stream until the connection
+		// is lost for any reason. This will force the client
+		// to attempt to reconnect after the server reboots.
+		<-req.Context().Done()
+	})
 }
 
 type HTTPHandlerWithErr func(http.ResponseWriter, *http.Request) error

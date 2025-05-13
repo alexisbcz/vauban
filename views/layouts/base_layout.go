@@ -24,6 +24,7 @@ import html "github.com/alexisbcz/libhtml"
 
 type BaseLayoutProps struct {
 	Title string
+	Class string
 }
 
 func BaseLayout(props BaseLayoutProps) func(children ...html.Node) html.Node {
@@ -37,7 +38,7 @@ func BaseLayout(props BaseLayoutProps) func(children ...html.Node) html.Node {
 					html.Script().Type("module").Src("https://cdn.jsdelivr.net/gh/starfederation/datastar@v1.0.0-beta.11/bundles/datastar.js"),
 					html.Title(html.Text(props.Title)),
 				),
-				html.Body(children...),
+				html.Body(children...).ClassIf(props.Class != "", props.Class),
 			).Lang("en").Attribute("data-on-load", "@get('/hotreload', {retryInterval: 100})"),
 		)
 	}

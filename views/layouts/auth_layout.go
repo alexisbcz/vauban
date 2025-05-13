@@ -18,41 +18,31 @@ along with Vauban. If not, see <https://www.gnu.org/licenses/>.
 
 For commercial licensing options, please contact Alexis Bouchez at alexbcz@proton.me
 */
-
-package main
+package layouts
 
 import (
-	"context"
-	"log/slog"
-	"net/http"
-	"os"
-
-	"github.com/alexisbcz/vauban/env"
-	"github.com/alexisbcz/vauban/exit"
-	"github.com/alexisbcz/vauban/router"
-	"github.com/jackc/pgx/v5/pgxpool"
+	html "github.com/alexisbcz/libhtml"
+	"github.com/alexisbcz/vauban/views/ui"
 )
 
-func main() {
-	dbpool, err := pgxpool.New(context.Background(), env.GetVar("DATABASE_URL", "postgres://vauban:vauban@localhost/vauban?sslmode=disable"))
-	if err != nil {
-		exit.WithErr(err)
-	}
-	defer dbpool.Close()
+type AuthLayoutProps struct {
+	Title       string
+	Description string
+}
 
-	if err := dbpool.Ping(context.Background()); err != nil {
-		exit.WithErr(err)
-	}
-
-	r := router.New(dbpool)
-	srv := &http.Server{
-		Addr:    env.GetVar("HTTP_ADDR", ":8080"),
-		Handler: r,
-	}
-
-	slog.Info("starting http server", "addr", srv.Addr)
-	if err := srv.ListenAndServe(); err != nil {
-		slog.Error("some error occured while serving http", "err", err)
-		os.Exit(1)
+func AuthLayout(props AuthLayoutProps) func(children ...html.Node) html.Node {
+	return func(children ...html.Node) html.Node {
+		return BaseLayout(BaseLayoutProps{
+			Title: props.Title,
+			Class: "bg-neutral-100 flex min-h-svh flex-col items-center justify-center gap-6 p-6 md:p-10",
+		})(
+			html.Main(
+				ui.Card(ui.CardProps{Class: "w-full !py-6"})(
+					html.H1(html.Text(props.Title)).Class("text-xl font-semibold text-center"),
+					html.H2(html.Text(props.Description)).Class("mt-2 text-center text-neutral-500 text-sm"),
+					html.Div(children...).Class("mt-4"),
+				),
+			).Class("flex w-full max-w-sm flex-col gap-6"),
+		)
 	}
 }
