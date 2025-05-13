@@ -21,6 +21,11 @@ func SignUpPage() html.Node {
 				ui.Input(ui.InputProps{Type: "password", Id: "password", Placeholder: "················"})(),
 			),
 			ui.Button(ui.ButtonProps{Text: "Sign Up"})(),
-		).Class("flex flex-col gap-y-4"),
+			html.P(
+				html.Text("Already have an account?"),
+				html.A(html.Text("Sign in")).Href("/sign-in").
+					Class("ml-1 cursor-pointer underline text-blue-700 hover:text-blue-600 transition-colors"),
+			).Class("text-sm text-neutral-800 text-center"),
+		).Class("flex flex-col gap-y-5"),
 	)
 }

@@ -36,11 +36,12 @@ func AuthLayout(props AuthLayoutProps) func(children ...html.Node) html.Node {
 			Title: props.Title,
 			Class: "bg-neutral-100 flex min-h-svh flex-col items-center justify-center gap-6 p-6 md:p-10",
 		})(
+			html.Div(html.P(html.Text("P"))).Class("font-serif px-4 py-1 text-2xl italic text-white rounded-md bg-black"),
 			html.Main(
 				ui.Card(ui.CardProps{Class: "w-full !py-6"})(
 					html.H1(html.Text(props.Title)).Class("text-xl font-semibold text-center"),
 					html.H2(html.Text(props.Description)).Class("mt-2 text-center text-neutral-500 text-sm"),
-					html.Div(children...).Class("mt-4"),
+					html.Div(children...).Class("mt-5"),
 				),
 			).Class("flex w-full max-w-sm flex-col gap-6"),
 		)

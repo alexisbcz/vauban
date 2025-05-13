@@ -84,7 +84,7 @@ func (r *Router) handlePublicAssets() {
 var hotReloadOnlyOnce sync.Once
 
 func (r *Router) handleHotReload() {
-	r.HandleFunc("/hotreload", func(w http.ResponseWriter, req *http.Request) {
+	r.Get("/hotreload", func(w http.ResponseWriter, req *http.Request) error {
 		sse := datastar.NewSSE(w, req)
 		hotReloadOnlyOnce.Do(func() {
 			// Refresh the client page as soon as connection
@@ -100,6 +100,8 @@ func (r *Router) handleHotReload() {
 		// is lost for any reason. This will force the client
 		// to attempt to reconnect after the server reboots.
 		<-req.Context().Done()
+
+		return nil
 	})
 }
 
