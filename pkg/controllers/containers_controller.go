@@ -22,9 +22,14 @@ For commercial licensing options, please contact Alexis Bouchez at alexbcz@proto
 package controllers
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/alexisbcz/vauban/pkg/httperror"
+	"github.com/alexisbcz/vauban/pkg/views/pages/containers"
+	"github.com/docker/docker/api/types"
+	"github.com/docker/docker/api/types/container"
+	docker "github.com/docker/docker/client"
 )
 
 type ContainersController struct{}
@@ -34,7 +39,24 @@ func NewContainersController() *ContainersController {
 }
 
 func (c *ContainersController) Index(w http.ResponseWriter, r *http.Request) error {
-	return httperror.NotImplemented("not implemented")
+	cli, err := docker.NewClientWithOpts(docker.FromEnv, docker.WithAPIVersionNegotiation())
+	if err != nil {
+		return err
+	}
+	defer cli.Close()
+
+	ctrs, err := cli.ContainerList(r.Context(), container.ListOptions{All: true})
+	if err != nil {
+		return err
+	}
+
+	services, err := cli.ServiceList(r.Context(), types.ServiceListOptions{})
+	if err != nil {
+		return err
+	}
+	fmt.Println(services)
+
+	return containers.IndexPage(ctrs, services).Render(w)
 }
 
 func (c *ContainersController) Show(w http.ResponseWriter, r *http.Request) error {

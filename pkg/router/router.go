@@ -23,11 +23,14 @@ package router
 
 import (
 	"errors"
+	"io/fs"
 	"log/slog"
 	"net/http"
 
 	"github.com/alexisbcz/vauban/pkg/controllers"
+	"github.com/alexisbcz/vauban/pkg/exit"
 	"github.com/alexisbcz/vauban/pkg/httperror"
+	"github.com/alexisbcz/vauban/pkg/public"
 )
 
 type Router struct {
@@ -36,16 +39,29 @@ type Router struct {
 
 func New() *Router {
 	router := &Router{http.NewServeMux()}
+
+	router.handlePublicAssets()
+
 	containersController := controllers.NewContainersController()
 	router.Get("/containers/{$}", containersController.Index)
 	router.Get("/containers/{id}/{$}", containersController.Show)
+
 	return router
+}
+
+func (r *Router) handlePublicAssets() {
+	assetsFS, err := fs.Sub(public.FS, "assets")
+	if err != nil {
+		exit.WithErr(err)
+	}
+	r.Handle("/", http.StripPrefix("/", http.FileServer(http.FS(assetsFS))))
 }
 
 type HTTPHandlerWithErr func(http.ResponseWriter, *http.Request) error
 
-func (r *Router) Handle(pattern string, handler HTTPHandlerWithErr) {
+func (r *Router) handleFunc(pattern string, handler HTTPHandlerWithErr) {
 	slog.Info("registering http route", "pattern", pattern)
+
 	r.HandleFunc(pattern, func(w http.ResponseWriter, r *http.Request) {
 		if err := handler(w, r); err != nil {
 			// Check if it's an HTTPError
@@ -64,21 +80,21 @@ func (r *Router) Handle(pattern string, handler HTTPHandlerWithErr) {
 }
 
 func (r *Router) Get(pattern string, handler HTTPHandlerWithErr) {
-	r.Handle("GET "+pattern, handler)
+	r.handleFunc("GET "+pattern, handler)
 }
 
 func (r *Router) Post(pattern string, handler HTTPHandlerWithErr) {
-	r.Handle("POST "+pattern, handler)
+	r.handleFunc("POST "+pattern, handler)
 }
 
 func (r *Router) Patch(pattern string, handler HTTPHandlerWithErr) {
-	r.Handle("PATCH "+pattern, handler)
+	r.handleFunc("PATCH "+pattern, handler)
 }
 
 func (r *Router) Put(pattern string, handler HTTPHandlerWithErr) {
-	r.Handle("PUT "+pattern, handler)
+	r.handleFunc("PUT "+pattern, handler)
 }
 
 func (r *Router) Delete(pattern string, handler HTTPHandlerWithErr) {
-	r.Handle("DELETE "+pattern, handler)
+	r.handleFunc("DELETE "+pattern, handler)
 }
