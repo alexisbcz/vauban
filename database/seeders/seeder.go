@@ -18,28 +18,10 @@ along with Vauban. If not, see <https://www.gnu.org/licenses/>.
 
 For commercial licensing options, please contact Alexis Bouchez at alexbcz@proton.me
 */
+package seeders
 
-package main
+import "context"
 
-import (
-	"log/slog"
-	"net/http"
-	"os"
-
-	"github.com/alexisbcz/vauban/env"
-	"github.com/alexisbcz/vauban/router"
-)
-
-func main() {
-	r := router.New()
-	srv := &http.Server{
-		Addr:    env.GetVar("HTTP_ADDR", ":8080"),
-		Handler: r,
-	}
-
-	slog.Info("starting http server", "addr", srv.Addr)
-	if err := srv.ListenAndServe(); err != nil {
-		slog.Error("some error occured while serving http", "err", err)
-		os.Exit(1)
-	}
+type Seeder interface {
+	Seed(ctx context.Context) error
 }

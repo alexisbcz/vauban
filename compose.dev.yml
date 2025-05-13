@@ -1,0 +1,11 @@
+# NOTE: This compose configuration file is designed for development purposes.
+
+services:
+  postgres:
+    image: postgres:17.4
+    ports:
+      - 127.0.0.1:5432:5432
+    environment:
+      - POSTGRES_DB=vauban
+      - POSTGRES_USER=vauban
+      - POSTGRES_PASSWORD=vauban

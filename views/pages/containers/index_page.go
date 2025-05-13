@@ -18,28 +18,31 @@ along with Vauban. If not, see <https://www.gnu.org/licenses/>.
 
 For commercial licensing options, please contact Alexis Bouchez at alexbcz@proton.me
 */
-
-package main
+package containers
 
 import (
-	"log/slog"
-	"net/http"
-	"os"
+	"strings"
 
-	"github.com/alexisbcz/vauban/env"
-	"github.com/alexisbcz/vauban/router"
+	html "github.com/alexisbcz/libhtml"
+	"github.com/alexisbcz/vauban/views/layouts"
+	"github.com/alexisbcz/vauban/views/ui"
+	"github.com/docker/docker/api/types/container"
+	"github.com/docker/docker/api/types/swarm"
 )
 
-func main() {
-	r := router.New()
-	srv := &http.Server{
-		Addr:    env.GetVar("HTTP_ADDR", ":8080"),
-		Handler: r,
-	}
+func IndexPage(containers []container.Summary, services []swarm.Service) html.Node {
+	return layouts.DashboardLayout(layouts.DashboardLayoutProps{
+		Title: "Containers",
+	})(
+		html.Main(
+			html.Map(containers, containerCard),
+		).Class("mx-auto max-w-5xl my-12 grid grid-cols-4 gap-4"),
+	)
+}
 
-	slog.Info("starting http server", "addr", srv.Addr)
-	if err := srv.ListenAndServe(); err != nil {
-		slog.Error("some error occured while serving http", "err", err)
-		os.Exit(1)
-	}
+func containerCard(container container.Summary) html.Node {
+	return ui.Card(ui.CardProps{})(
+		html.Span(html.Text("📦")),
+		html.P(html.Text(strings.Join(container.Names, ""))),
+	)
 }

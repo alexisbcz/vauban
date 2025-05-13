@@ -22,11 +22,10 @@ For commercial licensing options, please contact Alexis Bouchez at alexbcz@proto
 package controllers
 
 import (
-	"fmt"
 	"net/http"
 
-	"github.com/alexisbcz/vauban/pkg/httperror"
-	"github.com/alexisbcz/vauban/pkg/views/pages/containers"
+	"github.com/alexisbcz/vauban/httperror"
+	"github.com/alexisbcz/vauban/views/pages/containers"
 	"github.com/docker/docker/api/types"
 	"github.com/docker/docker/api/types/container"
 	docker "github.com/docker/docker/client"
@@ -54,7 +53,6 @@ func (c *ContainersController) Index(w http.ResponseWriter, r *http.Request) err
 	if err != nil {
 		return err
 	}
-	fmt.Println(services)
 
 	return containers.IndexPage(ctrs, services).Render(w)
 }

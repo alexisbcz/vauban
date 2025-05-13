@@ -18,31 +18,14 @@ along with Vauban. If not, see <https://www.gnu.org/licenses/>.
 
 For commercial licensing options, please contact Alexis Bouchez at alexbcz@proton.me
 */
-package containers
+package models
 
-import (
-	"strings"
+import "time"
 
-	html "github.com/alexisbcz/libhtml"
-	"github.com/alexisbcz/vauban/pkg/views/layouts"
-	"github.com/alexisbcz/vauban/pkg/views/ui"
-	"github.com/docker/docker/api/types/container"
-	"github.com/docker/docker/api/types/swarm"
-)
-
-func IndexPage(containers []container.Summary, services []swarm.Service) html.Node {
-	return layouts.DashboardLayout(layouts.DashboardLayoutProps{
-		Title: "Containers",
-	})(
-		html.Main(
-			html.Map(containers, containerCard),
-		).Class("mx-auto max-w-5xl my-12 grid grid-cols-4 gap-4"),
-	)
-}
-
-func containerCard(container container.Summary) html.Node {
-	return ui.Card(ui.CardProps{})(
-		html.Span(html.Text("📦")),
-		html.P(html.Text(strings.Join(container.Names, ""))),
-	)
+type User struct {
+	ID        uint
+	Email     string
+	Password  string
+	CreatedAt time.Time
+	UpdatedAt time.Time
 }

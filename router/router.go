@@ -26,11 +26,14 @@ import (
 	"io/fs"
 	"log/slog"
 	"net/http"
+	"sync"
+	"time"
 
-	"github.com/alexisbcz/vauban/pkg/controllers"
-	"github.com/alexisbcz/vauban/pkg/exit"
-	"github.com/alexisbcz/vauban/pkg/httperror"
-	"github.com/alexisbcz/vauban/pkg/public"
+	"github.com/alexisbcz/vauban/controllers"
+	"github.com/alexisbcz/vauban/exit"
+	"github.com/alexisbcz/vauban/httperror"
+	"github.com/alexisbcz/vauban/public"
+	datastar "github.com/starfederation/datastar/sdk/go"
 )
 
 type Router struct {
@@ -55,6 +58,26 @@ func (r *Router) handlePublicAssets() {
 		exit.WithErr(err)
 	}
 	r.Handle("/", http.StripPrefix("/", http.FileServer(http.FS(assetsFS))))
+}
+
+var hotReloadOnlyOnce sync.Once
+
+func (router *Router) handleHotReload(w http.ResponseWriter, r *http.Request) {
+	sse := datastar.NewSSE(w, r)
+	hotReloadOnlyOnce.Do(func() {
+		// Refresh the client page as soon as connection
+		// is established. This will occur only once
+		// after the server starts.
+		sse.ExecuteScript(
+			"window.location.reload()",
+			datastar.WithExecuteScriptRetryDuration(time.Second),
+		)
+	})
+
+	// Freeze the event stream until the connection
+	// is lost for any reason. This will force the client
+	// to attempt to reconnect after the server reboots.
+	<-r.Context().Done()
 }
 
 type HTTPHandlerWithErr func(http.ResponseWriter, *http.Request) error

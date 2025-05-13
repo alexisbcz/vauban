@@ -3,3 +3,22 @@
 [AGPL-3.0 license](./LICENSE)
 
 > A simple web interface to manage your Docker installation.
+
+### Development environment
+
+```bash
+git clone https://github.com/alexisbcz/vauban.git # clone the Git repository
+cd vauban # change directory to Git repository
+
+make setup # install deps
+
+make db-up # spin up postgres container
+
+make migration-up # migrate the database
+
+make seed # seed the database
+```
+
+### Production environment
+
+_WIP_

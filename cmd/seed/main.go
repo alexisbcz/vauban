@@ -18,28 +18,35 @@ along with Vauban. If not, see <https://www.gnu.org/licenses/>.
 
 For commercial licensing options, please contact Alexis Bouchez at alexbcz@proton.me
 */
-
 package main
 
 import (
-	"log/slog"
-	"net/http"
-	"os"
+	"context"
+	"time"
 
+	"github.com/alexisbcz/vauban/database/seeders"
 	"github.com/alexisbcz/vauban/env"
-	"github.com/alexisbcz/vauban/router"
+	"github.com/alexisbcz/vauban/exit"
+	"github.com/jackc/pgx/v5/pgxpool"
 )
 
 func main() {
-	r := router.New()
-	srv := &http.Server{
-		Addr:    env.GetVar("HTTP_ADDR", ":8080"),
-		Handler: r,
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+
+	dbpool, err := pgxpool.New(ctx, env.GetVar("DATABASE_URL", "postgres://panache:panache@localhost/panache?sslmode=disable"))
+	if err != nil {
+		exit.WithErr(err)
+	}
+	defer dbpool.Close()
+
+	seeders := []seeders.Seeder{
+		seeders.NewUserSeeder(dbpool),
 	}
 
-	slog.Info("starting http server", "addr", srv.Addr)
-	if err := srv.ListenAndServe(); err != nil {
-		slog.Error("some error occured while serving http", "err", err)
-		os.Exit(1)
+	for _, seeder := range seeders {
+		if err := seeder.Seed(ctx); err != nil {
+			exit.WithErr(err)
+		}
 	}
 }
