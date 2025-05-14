@@ -18,31 +18,35 @@ along with Vauban. If not, see <https://www.gnu.org/licenses/>.
 
 For commercial licensing options, please contact Alexis Bouchez at alexbcz@proton.me
 */
-package containers
+package ui
 
 import (
-	"strings"
+	"fmt"
+	"unicode"
 
 	html "github.com/alexisbcz/libhtml"
-	"github.com/alexisbcz/vauban/views/layouts"
-	"github.com/alexisbcz/vauban/views/ui"
-	"github.com/docker/docker/api/types/container"
-	"github.com/docker/docker/api/types/swarm"
+	"github.com/alexisbcz/vauban/validator"
 )
 
-func IndexPage(containers []container.Summary, services []swarm.Service) html.Node {
-	return layouts.DashboardLayout(layouts.DashboardLayoutProps{
-		Title: "Containers",
-	})(
-		html.Main(
-			html.Map(containers, containerCard),
-		).Class("mx-auto max-w-5xl my-12 grid grid-cols-4 gap-4"),
+func Errors(key string, errorsData validator.Errors) html.Node {
+	fmt.Println(errorsData)
+	errors := errorsData[key]
+
+	if len(errorsData[key]) == 0 {
+		return nil
+	}
+
+	return html.Div(
+		html.Map(errors, func(err string) html.Node {
+			return html.
+				P(html.Textf("→ %s %s", capitalize(key), err)).
+				Class("text-sm text-red-600")
+		}),
 	)
 }
 
-func containerCard(container container.Summary) html.Node {
-	return ui.Card(ui.CardProps{})(
-		html.Span(html.Text("📦")),
-		html.P(html.Text(strings.Join(container.Names, ""))),
-	)
+func capitalize(s string) string {
+	r := []rune(s)
+	r[0] = unicode.ToUpper(r[0])
+	return string(r)
 }

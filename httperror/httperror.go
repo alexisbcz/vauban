@@ -45,6 +45,11 @@ func BadRequest(message string) *HTTPError {
 	return New(http.StatusBadRequest, message)
 }
 
+// InternalServerError creates an instance of HTTPError, setting code to 500
+func InternalServerError(message string) *HTTPError {
+	return New(http.StatusInternalServerError, message)
+}
+
 // NotFound creates an instance of HTTPError, setting code to 404
 func NotFound(message string) *HTTPError {
 	return New(http.StatusNotFound, message)

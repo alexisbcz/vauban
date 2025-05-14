@@ -23,6 +23,7 @@ package router
 
 import (
 	"errors"
+	"fmt"
 	"io/fs"
 	"log/slog"
 	"net/http"
@@ -35,7 +36,6 @@ import (
 	"github.com/alexisbcz/vauban/httperror"
 	"github.com/alexisbcz/vauban/public"
 	"github.com/jackc/pgx/v5/pgxpool"
-	datastar "github.com/starfederation/datastar/sdk/go"
 )
 
 type Router struct {
@@ -66,10 +66,6 @@ func New(dbpool *pgxpool.Pool) *Router {
 	router.Get("/reset-password/{$}", resetPasswordController.Show)
 	router.Post("/reset-password/{$}", resetPasswordController.Handle)
 
-	containersController := controllers.NewContainersController()
-	router.Get("/containers/{$}", containersController.Index)
-	router.Get("/containers/{id}/{$}", containersController.Show)
-
 	return router
 }
 
@@ -85,22 +81,55 @@ var hotReloadOnlyOnce sync.Once
 
 func (r *Router) handleHotReload() {
 	r.Get("/hotreload", func(w http.ResponseWriter, req *http.Request) error {
-		sse := datastar.NewSSE(w, req)
+		// Set headers for SSE
+		w.Header().Set("Content-Type", "text/event-stream")
+		w.Header().Set("Cache-Control", "no-cache")
+		w.Header().Set("Connection", "keep-alive")
+		w.Header().Set("Access-Control-Allow-Origin", "*")
+
+		// Flush headers immediately
+		if f, ok := w.(http.Flusher); ok {
+			f.Flush()
+		}
+
+		// Send ping events every 15 seconds to keep connection alive
+		ticker := time.NewTicker(15 * time.Second)
+		defer ticker.Stop()
+
+		// Send initial ping to confirm connection is working
+		fmt.Fprintf(w, "event: ping\ndata: connected\n\n")
+		if f, ok := w.(http.Flusher); ok {
+			f.Flush()
+		}
+
+		// Send reload event once if this is first connection after server start
 		hotReloadOnlyOnce.Do(func() {
-			// Refresh the client page as soon as connection
-			// is established. This will occur only once
-			// after the server starts.
-			sse.ExecuteScript(
-				"window.location.reload()",
-				datastar.WithExecuteScriptRetryDuration(time.Second),
-			)
+			time.Sleep(500 * time.Millisecond) // Wait a bit to ensure client is ready
+			fmt.Fprintf(w, "event: reload\ndata: reload\n\n")
+			if f, ok := w.(http.Flusher); ok {
+				f.Flush()
+			}
 		})
 
-		// Freeze the event stream until the connection
-		// is lost for any reason. This will force the client
-		// to attempt to reconnect after the server reboots.
-		<-req.Context().Done()
+		// Use a separate goroutine to send ping events
+		done := make(chan bool)
+		go func() {
+			for {
+				select {
+				case <-ticker.C:
+					fmt.Fprintf(w, "event: ping\ndata: ping\n\n")
+					if f, ok := w.(http.Flusher); ok {
+						f.Flush()
+					}
+				case <-done:
+					return
+				}
+			}
+		}()
 
+		// Keep the connection open until client disconnects
+		<-req.Context().Done()
+		close(done)
 		return nil
 	})
 }

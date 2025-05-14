@@ -18,29 +18,13 @@ along with Vauban. If not, see <https://www.gnu.org/licenses/>.
 
 For commercial licensing options, please contact Alexis Bouchez at alexbcz@proton.me
 */
-package controllers
+package pages
 
 import (
-	"net/http"
-
-	"github.com/alexisbcz/vauban/database/repositories"
-	"github.com/alexisbcz/vauban/views/pages"
+	html "github.com/alexisbcz/libhtml"
+	"github.com/alexisbcz/vauban/views/layouts"
 )
 
-type ResetPasswordController struct {
-	usersRepository repositories.UsersRepository
-}
-
-func NewResetPasswordController(usersRepository repositories.UsersRepository) *ResetPasswordController {
-	return &ResetPasswordController{
-		usersRepository: usersRepository,
-	}
-}
-
-func (c *ResetPasswordController) Show(w http.ResponseWriter, r *http.Request) error {
-	return pages.ResetPasswordPage().Render(w)
-}
-
-func (c *ResetPasswordController) Handle(w http.ResponseWriter, r *http.Request) error {
-	return nil
+func ForgotPasswordPage() html.Node {
+	return layouts.AuthLayout(layouts.AuthLayoutProps{})()
 }

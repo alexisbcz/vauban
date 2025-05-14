@@ -19,12 +19,48 @@ func BaseLayout(props BaseLayoutProps) func(children ...html.Node) html.Node {
 					html.Link().Rel("preconnect").Href("https://fonts.googleapis.com"),
 					html.Link().Rel("preconnect").Href("https://fonts.gstatic.com").Attribute("crossorigin", ""),
 					html.Link().Rel("stylesheet").Href("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Instrument+Serif:ital@0;1&display=swap"),
-					html.Script().Type("module").Src("https://cdn.jsdelivr.net/gh/starfederation/datastar@v1.0.0-beta.11/bundles/datastar.js"),
+					html.Script().Type("module").Src("https://unpkg.com/htmx.org@2.0.4"),
 					html.Title(html.Text(props.Title)),
+
+					// Add hot reload script
+					html.Script(html.Raw(`
+						document.addEventListener('DOMContentLoaded', function() {
+							function setupEventSource() {
+								console.log('Connecting to hotreload SSE...');
+								const eventSource = new EventSource('/hotreload');
+								
+								eventSource.addEventListener('open', function() {
+									console.log('SSE connection established');
+								});
+								
+								eventSource.addEventListener('ping', function(e) {
+									console.log('Ping received:', e.data);
+								});
+								
+								eventSource.addEventListener('reload', function() {
+									console.log('Reload signal received');
+									window.location.reload();
+								});
+								
+								eventSource.addEventListener('error', function(e) {
+									console.error('SSE error:', e);
+									eventSource.close();
+									
+									// Try to reconnect after a delay
+									setTimeout(function() {
+										console.log('Attempting to reconnect...');
+										setupEventSource();
+									}, 2000);
+								});
+							}
+							
+							// Initial setup
+							setupEventSource();
+						});
+					`)),
 				),
 				html.Body(children...).ClassIf(props.Class != "", props.Class),
-			).Lang("en").
-				Attribute("data-on-load", "@get('/hotreload', {retryInterval: 100})"),
+			).Lang("en"),
 		)
 	}
 }
