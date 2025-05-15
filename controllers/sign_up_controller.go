@@ -64,7 +64,7 @@ func (c *SignUpController) Handle(w http.ResponseWriter, r *http.Request) error 
 			New("email").Email().MaxLength(255).
 			Unique(func(value string) (ok bool) {
 				_, err := c.usersRepository.GetByEmail(r.Context(), value)
-				return err != nil
+				return err == repositories.ErrUserNotFound
 			}),
 		field.New("password").MinLength(8).MaxLength(255),
 	)
