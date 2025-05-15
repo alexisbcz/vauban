@@ -58,14 +58,13 @@ func (c *SignUpController) Handle(w http.ResponseWriter, r *http.Request) error 
 
 	// Define the form validator
 	v := validator.New(
+		field.New("firstName").MinLength(1).MaxLength(50),
+		field.New("lastName").MinLength(1).MaxLength(50),
 		field.
 			New("email").Email().MaxLength(255).
 			Unique(func(value string) (ok bool) {
-				if _, err := c.usersRepository.GetByEmail(r.Context(), value); err != nil {
-					fmt.Println(err)
-					return false
-				}
-				return true
+				_, err := c.usersRepository.GetByEmail(r.Context(), value)
+				return err != nil
 			}),
 		field.New("password").MinLength(8).MaxLength(255),
 	)
@@ -78,8 +77,10 @@ func (c *SignUpController) Handle(w http.ResponseWriter, r *http.Request) error 
 
 	// Define the new user record
 	user := &models.User{
-		Email:    r.FormValue("email"),
-		Password: r.FormValue("password"),
+		FirstName: r.FormValue("firstName"),
+		LastName:  r.FormValue("lastName"),
+		Email:     r.FormValue("email"),
+		Password:  r.FormValue("password"),
 	}
 
 	// Store a new user record in the database
@@ -90,8 +91,8 @@ func (c *SignUpController) Handle(w http.ResponseWriter, r *http.Request) error 
 	// Authenticate the user
 	session.SetSignedCookie(w, session.AUTH_COOKIE_NAME, fmt.Sprint(user.ID), int(time.Hour*24*7))
 
-	// Redirect to wherever the user needs to be redirected
-	http.Redirect(w, r, "/", http.StatusSeeOther)
+	// Redirect using HTMX
+	w.Header().Set("HX-Redirect", "/")
 
 	return nil
 }

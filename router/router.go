@@ -34,9 +34,24 @@ import (
 	"github.com/alexisbcz/vauban/database/repositories"
 	"github.com/alexisbcz/vauban/exit"
 	"github.com/alexisbcz/vauban/httperror"
+	"github.com/alexisbcz/vauban/middleware"
 	"github.com/alexisbcz/vauban/public"
+	"github.com/alexisbcz/vauban/session"
 	"github.com/jackc/pgx/v5/pgxpool"
 )
+
+// Middleware represents a chain of HTTP middleware
+type Middleware func(handler HTTPHandlerWithErr) HTTPHandlerWithErr
+
+// Chain combines multiple middleware into a single middleware
+func Chain(middlewares ...Middleware) Middleware {
+	return func(final HTTPHandlerWithErr) HTTPHandlerWithErr {
+		for i := len(middlewares) - 1; i >= 0; i-- {
+			final = middlewares[i](final)
+		}
+		return final
+	}
+}
 
 type Router struct {
 	*http.ServeMux
@@ -65,6 +80,17 @@ func New(dbpool *pgxpool.Pool) *Router {
 	resetPasswordController := controllers.NewResetPasswordController(usersRepository)
 	router.Get("/reset-password/{$}", resetPasswordController.Show)
 	router.Post("/reset-password/{$}", resetPasswordController.Handle)
+
+	// Create middleware
+	authMiddleware := middleware.NewAuthMiddleware(usersRepository)
+
+	// Logout route
+	router.Get("/logout/{$}", authMiddleware.RequireAuth(func(w http.ResponseWriter, r *http.Request) error {
+		// Clear the auth cookie and redirect to home
+		session.ClearCookie(w, session.AUTH_COOKIE_NAME)
+		w.Header().Set("HX-Redirect", "/")
+		return nil
+	}))
 
 	return router
 }

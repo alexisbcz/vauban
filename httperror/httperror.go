@@ -59,3 +59,8 @@ func NotFound(message string) *HTTPError {
 func NotImplemented(message string) *HTTPError {
 	return New(http.StatusNotImplemented, message)
 }
+
+// Unauthorized creates an instance of HTTPError, setting code to 401
+func Unauthorized(message string) *HTTPError {
+	return New(http.StatusUnauthorized, message)
+}

@@ -21,7 +21,6 @@ For commercial licensing options, please contact Alexis Bouchez at alexbcz@proto
 package ui
 
 import (
-	"fmt"
 	"unicode"
 
 	html "github.com/alexisbcz/libhtml"
@@ -29,7 +28,6 @@ import (
 )
 
 func Errors(key string, errorsData validator.Errors) html.Node {
-	fmt.Println(errorsData)
 	errors := errorsData[key]
 
 	if len(errorsData[key]) == 0 {
@@ -40,7 +38,7 @@ func Errors(key string, errorsData validator.Errors) html.Node {
 		html.Map(errors, func(err string) html.Node {
 			return html.
 				P(html.Textf("→ %s %s", capitalize(key), err)).
-				Class("text-sm text-red-600")
+				Class("text-sm text-red-700")
 		}),
 	)
 }

@@ -63,13 +63,15 @@ func (r *usersRepository) Store(ctx context.Context, user *models.User) error {
 	user.Email = r.normalizeEmail(user.Email)
 
 	query := `
-		INSERT INTO users (email, password)
-		VALUES ($1, $2)
+		INSERT INTO users (first_name, last_name, email, password)
+		VALUES ($1, $2, $3, $4)
 		RETURNING id, created_at, updated_at
 	`
 	err := r.dbpool.QueryRow(
 		ctx,
 		query,
+		user.FirstName,
+		user.LastName,
 		user.Email,
 		user.Password,
 	).Scan(&user.ID, &user.CreatedAt, &user.UpdatedAt)
@@ -81,7 +83,7 @@ func (r *usersRepository) Store(ctx context.Context, user *models.User) error {
 
 func (r *usersRepository) GetByID(ctx context.Context, id int64) (*models.User, error) {
 	query := `
-		SELECT id, email, password, created_at, updated_at
+		SELECT id, first_name, last_name, email, password, created_at, updated_at
 		FROM users
 		WHERE id = $1
 	`
@@ -93,6 +95,8 @@ func (r *usersRepository) GetByID(ctx context.Context, id int64) (*models.User, 
 		id,
 	).Scan(
 		&user.ID,
+		&user.FirstName,
+		&user.LastName,
 		&user.Email,
 		&user.Password,
 		&user.CreatedAt,
@@ -113,7 +117,7 @@ func (r *usersRepository) GetByEmail(ctx context.Context, email string) (*models
 	email = r.normalizeEmail(email)
 
 	query := `
-		SELECT id, email, password, created_at, updated_at
+		SELECT id, first_name, last_name email, password, created_at, updated_at
 		FROM users
 		WHERE email = $1
 	`
@@ -125,6 +129,8 @@ func (r *usersRepository) GetByEmail(ctx context.Context, email string) (*models
 		email,
 	).Scan(
 		&user.ID,
+		&user.FirstName,
+		&user.LastName,
 		&user.Email,
 		&user.Password,
 		&user.CreatedAt,
