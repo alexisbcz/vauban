@@ -2,6 +2,8 @@
 
 [AGPL-3.0 license](./LICENSE)
 
+[![Join Discord](https://img.shields.io/badge/Join%20Discord-gray?style=flat&logo=discord&logoColor=white&link=https://discord.gg/eMUC7ejHja)](https://discord.gg/eMUC7ejHja)
+
 > A simple web interface to manage your Docker installation.
 
 ### Development environment
